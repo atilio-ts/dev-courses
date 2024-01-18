@@ -188,6 +188,50 @@ Then inside the component function to use it:
 
     }
 
+## Style
+
+The style property is an object with css properties, it is like doing inline css.
+
+    <h1 style={{color: 'red'}}>Hello</h1>
+
+Properties that use a dash must be in camelCase. For example text-align becomes textAlign, or you can wrap it in quotes 'text-align'.
+
+Todo inline css with conditionals do it this way.
+
+    <h1 style={{color: yesPressed ? 'green':'red'}}>CSS is great!</h1>
+
+You can add dynamic classes using conditionals and template literals
+
+    className={`label ${validEmail ? 'green':'red'}`}
+
+You can import classes as modules using import
+
+    import classes from 'file.module.css'
+    <p className={classes.label}>Hello</p>
+
+### Styled-Components
+
+It is a npm module that lets you style components, it returns a function with those styles applied to it.
+
+    const ControlContainer = styled.div`
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 10px;
+    `
+This creates a component called Control container with those styles. To use it:
+
+    <ControlContainer />
+
+You can add conditionals to styled components just like with regular css
+
+    const ControlContainer = styled.div`
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 10px;
+        color: ${(props) => (props.valid ? 'green' : 'red')};
+    `
 
 ## Notes
 
