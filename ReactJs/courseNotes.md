@@ -209,7 +209,7 @@ You can import classes as modules using import
     import classes from 'file.module.css'
     <p className={classes.label}>Hello</p>
 
-### Styled-Components
+## Styled-Components
 
 It is a npm module that lets you style components, it returns a function with those styles applied to it.
 
@@ -232,6 +232,10 @@ You can add conditionals to styled components just like with regular css
         margin: 10px;
         color: ${(props) => (props.valid ? 'green' : 'red')};
     `
+
+### Tailwind CSS
+
+This library can be also used with just plain css an d html, it works like bootstrap, you can add classes to component to apply defined styles.
 
 ## Notes
 
