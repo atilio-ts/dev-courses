@@ -161,3 +161,107 @@ Gives us the ability to add functionality to the application without modifying t
 Defines how easy it is to test the application. Manual: a phisical person does the testing interacting with the interface. Unit testing: code that checks the functions with specific parameters and expects certain behaivior. Integration test: instead of testing just a function it tests the whole flow.
 
 ## Components architecture
+
+Also named as services is a piece of code that handles a single process. Deals with the problem by separating it in different components or services that handle each part of the application.
+
+### Layers
+
+Each layer represents an horizontal functionality. You cannot skip layers. Each layers should handle exceptions and error for their own, error from one layer should not be handled by another one, after that you should log the errorm and pass a generic exception to the superior layer.The most common ones are:
+
+1 - Expose user interface (UI): Expose API, JSON handling, auth
+
+2 - Execute logic (Bussiness Logic): Validation, computations.
+
+3 - Save/retrieve data (Data Access Layer): Connection handling, querying, transactions.
+
+### Interfaces
+
+A contract that declares the structure of an object. For example:
+
+    interface Perso{
+        name: string;
+        age: number;
+    }
+
+### Dependency Injection - DI
+
+Consists in using the Factory pattern, the idea is to return the correct interface/class instance based on the input data.
+
+    function GetInstance (type: string){
+        switch (type){
+            case "car":
+                return new Car();
+
+            case "boat":
+                return new Boat();
+
+            default:
+                return new Vehicle();
+        }
+    }
+
+### SOLID
+
+
+
+Single Responsibility Principle: Each class, module or method should have one and only one responsibility.
+
+Open Closed Principle: In order to change the behavior of a module you should choose to extend and add new code instead of modifying existing. Extend functionality without touching the existing code.
+
+Liskov Substitution Principle: If P and C are Parent and Child classes, objects of type C may be replaced with type F, so if you decide to replace the parent class with the child class all the old methos should still work.
+
+Interface Segregation Principle: Many client specific interfaces are better than one general purpose interface.
+
+Dependency Inversion Principle: Consists in using the Factory pattern, the idea is to return the correct interface/class instance based on the input data.
+
+### Naming Conventions
+
+Set of rules to name the different code elements. Define it at the start of the project and stick to it; some examples are: camelCase, under_score_notation.
+
+### Exception Handling
+
+Here are some best practices for exceptions:
+
+- Catch an exception only if you have something to do with it (logging does not count). For example rolling back a transaction, retry the operation, wrap the exception.
+- Always catch specific exceptions: you always should be aware of the type of the exception. For example: SQLException
+- Use try catch in the smallest code fargment posible. Locate the fragments of code that may raise exceptions and just wrap them around.
+
+### Logging
+
+You should use logging for 2 purposes:
+
+- Track errors: if there are any exceptions during execution you should log them including all the relevant details like stack trace, inner exceptions, user details, etc.
+- Gather data: logs should help you to get to know more about your application for example: most visited modules, performance, etc.
+
+## Design Patterns
+
+Collection of reusable solutions to common problems in software design, theses patterns have already been tested by other developer and they solve most of the common problems you'll face when designing an application.
+
+### Factory Pattern
+
+Allows creating objects without especifying the class. This helps us in case we later need to change the class of an object.
+
+### Repository Pattern
+
+Modules not handling the actual work with the datastore should be oblivious to the datastore type. Consists in implementing a factory pattern to generates instances of the data store.
+
+### Facade Pattern
+
+Packages existing functionalities into a new method to execute an action. Is the ability to create a method that depends in other method implementations in order to work, it just orchestates the work, for example:
+
+            function transfer(from, to, money){
+                if(!checkAccountExist(from) ||
+                !checkAccountExist(to) ||
+                !hasEnoughMoney(money))
+                    return false;
+
+                widthdrawMoney(from, money);
+                depositmoney(to, money);
+
+                writeLog(from, "Money transfered");
+                writeLog(to, "Money transfered");
+
+                return true;
+            }
+
+## Sytem Architecture
