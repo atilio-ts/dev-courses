@@ -202,8 +202,6 @@ Consists in using the Factory pattern, the idea is to return the correct interfa
 
 ### SOLID
 
-
-
 Single Responsibility Principle: Each class, module or method should have one and only one responsibility.
 
 Open Closed Principle: In order to change the behavior of a module you should choose to extend and add new code instead of modifying existing. Extend functionality without touching the existing code.
@@ -264,4 +262,135 @@ Packages existing functionalities into a new method to execute an action. Is the
                 return true;
             }
 
-## Sytem Architecture
+## System Architecture
+
+Inlcudes: Defining software components, defining the way these components communicate, designing the system's capabilities (scalability, redundancy, performance, etc).
+
+Important questions to ask yourself: How will the system work under heavy load? What wil happen if the syustem will crash at his exact moment inthe business flow? How complicated can be the update process?
+
+### Loose Coupling
+
+The way to make components independent from each other. It is best to use a system direactory instead of comunicating directly.
+By using loose coupling we ensure that each component could be modified with minimal impact in other services, for example every part of the system can be programmed in a different language/framework, if you use rest to expose an api. Solutions:
+
+1 - Create something like an index (yellow pages), for the modules so they can connect with other modules using that interface (Ex Consul).
+
+2- Create a gateway that is in charge of routing the requests.
+
+### Stateless
+
+Allows the system to scale and makes it redundant. The application state is stored in two places: the data store and the user interface. It is important to use a load balancer. When the data is stored in the code the application is called Stateful.
+
+### Caching
+
+Improoves system performance. This layer sits between the datastore and the bussiness logic layer, and stores data for fast and easy retrieval (ex redis). Cache trades reliability for performance and it is lost in a server crash. Cache should hold data that is frequently accessed and rarely modified.
+
+Types of cache:
+
+- In memory, In process cache: uses the service memory to store the data, it is extremely fast but size limited.
+
+- Distributed cache: not as fast as in memory cache, separate from the service, provides an easy interface for accesing the data, it is distributed across servers so it can store more data
+
+### Messaging
+
+Ways to pass data between the system components.
+
+- Rest API: Uses the HTTP protocol to send messages.
+  - Performance: Very Fast
+  - Message Size: 8kb
+  - ExecutionModel: Great for short actions, not for long processes
+  - Feedback: Immediate via Response codes
+  - Complexity: Extremely easy
+  - Use case: Apis
+
+- HTTP Push Notifications: A client subscribes to an event and when it occurs it gets a notification. If it is in Real-Time it uses sockets, popular for chats
+  - Performance: Excelent
+  - Message size: Limited, few kb
+  - Execution Method: Web socket, long polling
+  - Feedback: None, just send the message. It should be used for Server -> Client communication
+  - Use case: Chat or monitoring apps
+
+- Queue: RabbitMQ, Kafka, etc. One service places a message in the queue and another service cosumes it. Ensures messages are processed
+  - Performance: Not so good, the queue adds a bit of latency
+  - Message Size: Technically not limited, but you should use small messages
+  - Execution Model: Polling. The consumer service is constantly checking for a new message in the queue
+  - Feedback: Very reliable
+  - Complexity: Requires training and setup
+  - Use case: Complex systems where order and reliability are a priority.
+
+- File based and Database Based: The message is placed as a file in a folder or as data in a selected database, Works like a queue, kind of. In queues the message is guaranteed to be handled once and only once with this method no.
+  - Performance: Not so good, the queue adds a bit of latency
+  - Message Size: Unlimited
+  - Execution Model: Polling. The consumer service is constantly checking for a new message in the queue
+  - Feedback: Very reliable
+  - Complexity: Requires training and setup
+  - Use case: Complex systems where order and reliability are a priority. Better use queues
+
+### Logging and monitoring
+
+Report system status and avoid failures. You can use log engines or databases. The best aproach is to create a Logging service that writes logs to an specific database to improve querying and analytics. You can use an API, folders (logstash), etc. The logs from the entire system should be accesible from one point and should be in one specific format. Use correlation ids to help identify when the system fails during a process.
+
+## Arquitecture Document
+
+Describes what should be developed and how.
+
+### Audience
+
+- Development team: Technology stack, components, services, comunicaiton, implementation.
+- Management: Project Manager, CTO, CEO. Asure that the project is in good hands. Explain technologies and patterns.
+- QA: Prepare testing infrastructure.
+
+### Contents
+
+### Format
+
+As simple as possible, make sure the visualization is clear easy to underestand. Main points to describe are: System role, reasons for replacing the old system, bussiness impact.m
+
+### Background
+
+One page lenght aprox. Directed to the development team and management. Role and motivation for the system. Describe the problem briefly from a Bussiness POV.
+
+### Requirements
+
+One page lenght aprox. Directed to the development team and management. Brief list, use bullet points and no more than 3 lines for each one of them.
+
+- Functional: What the system should do
+- Non fuctional: With what should the system deal? (Performance, Load, Data Volume). Specific and very well detailed
+
+### Executive Summary
+
+Three pages lenght aprox. Directed to the management. Presents the system at a very high level for people of the bussiness related areas. Should convince management to work with you.
+
+### Architecture Overview
+
+Ten pages lenght aprox. Directed to the development team and QA. Provides a high level view of the architecture and presents it to the team. 
+
+- General description: Describes the architecure type and major non functional requirements. Ex: Web based system, microservices, avg performance.
+- High Level Diagram: Show a representation of the system. Squares are services, databases cylinders, interactions as arrows. Just logic, do not inclue hardware information.
+- Diagram walkthrough: Describes the parts of the system and their role.
+  
+### Components Drill Down
+
+Unlimited lenght. Directed to the development team and QA. For each component it should be 3 sections.
+
+- Role: Recap of the component description.
+- Technology stack: Should describe in detail the chosen technologies. Data Store, backend, frontend. Be extremely detailed and include an explanation for the selection. You can compare alternatives pros and cons to support your desicion.
+- Components Architecture: describes the component inner architecture, explains exactly what it should do and how. Describe API (URL, method, role, response codes, comments). Describe Layers: be as detailed as possible.
+- Development instructions: guidelines and best practices for development and documentation.
+
+## Case of Study Notes
+
+First define the requirements. Questions to ask: How and how many inputs are received, load, data volume.
+
+1. How many concurrent messages should the system expect in peak time?
+2. What is the total number of messages per month?
+3. What is the average size of a message?
+
+Message lost: no message lost
+
+Users in total and concurrent users.
+
+Maximium downtime.
+
+Components: 
+Receiver, Handler, Logging, Data Store, Info, Queues.
