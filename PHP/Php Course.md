@@ -1,29 +1,44 @@
 # PHP
 
-Hello and welcome to my PHP course notes/cheatsheet, this is a compilation from multiple learning courses and websites about PHP and its use cases.
+Hello and welcome to my PHP course notes/cheatsheet, this is a compilation from multiple learning courses ([1](https://www.youtube.com/playlist?list=PLr3d3QYzkw2xabQRUpcZ_IBk9W50M9pe-)) and websites about PHP and its use cases.
 
 ## Contents
 
 1. What is php
 2. Basic Syntax and Variables
-   2.1. echo
-   2.2. Variables
-   2.3. Comments
-   2.4. Constants
-   2.5. Variable Variables
-3. Data types
-    3.1. Booleans
-    3.2. Integers
-    3.4. Floats
-    3.5. Strings
-    3.6. Null
-    3.7. Arrays
-4. Operators
-5. Operator Precedence
-6. Control Structures
-7. Loops
-8. Using external files
-9.
+   1. echo
+   2. Comments
+3. Variables
+   1. How PHP stores variables
+   2. Variable scope
+   3. Constants
+   4. Variable Variables
+4. Data types
+   1. Booleans
+   2. Integers
+   3. Floats
+   4. Strings
+   5. Null
+   6. Arrays
+   7. Array functions
+5. Operators
+6. Operator Precedence
+7. Control Structures
+8. Loops
+9. Using external files
+10. Functions
+    1. Return types
+    2. Arguments and parameters
+    3. Pass arguments by reference
+    4. Named arguments
+    5. Periodic functions
+    6. Variable functions
+    7. Anonymous or Lambda functions
+    8. Callback functions
+    9. Arrow functions
+11. Dates and Timezones
+12. Error handling
+13. File System
 
 ## What is php?
 
@@ -61,7 +76,11 @@ You can abbreviate the php echo this way
 
     <?= 'Hello world' ?>
 
-### Variables
+### Comments
+
+We use // and # for one line comments and /**/ for multi line comments. Comments do not comment the php tag this //?> or #?> does not work.
+
+## Variables
 
 We use $ to define variables, the name must start with a letter or an uderescore, it cannot be a number or a special character
 
@@ -73,9 +92,46 @@ Variables are assigned by value default, to assign a variable by reference use &
     $y = $x //by value
     $y = &$x //by reference
 
-### Comments
+### How PHP stores variables
 
-We use // and # for one line comments and /**/ for multi line comments. Comments do not comment the php tag this //?> or #?> does not work.
+Php stores global variables in an array where each key and value pair is defined after a variable. This $GLOBALS array is called a superglobal variable.
+
+    $x = 10;
+    echo $GLOBALS [x]//prints 10
+
+### Variable scope
+
+You can define a variable in one file and then use it inside another file.
+
+    $x = 5;
+
+    include('external_file.php')
+        (inside external_file.php);
+        $x=10
+    
+    echo $x; //prints 10
+
+Global variables cannot be accessed inside of a function by default, you have to add the global tag to its declaration to use them inside of the function, this passes the value of the variable by reference.
+
+    $x = 5;
+    function foo(){
+        global $x;
+        $x = 15
+        echo $x;//prints 15
+    }
+
+### Static variables
+
+Static variables are regular variables with a local scope, after the block is executed the variables are not destroy and keep their value. You can use this to declare variables that need an expensive process to get their value, something like async await
+    function getValue(){
+        static $value = null;
+
+        if($value === null){
+            $value = expensiveFunction();
+        }
+
+        return $value
+    }
 
 ### Constants
 
@@ -257,6 +313,12 @@ You can cast variables into an empty array and it assigns it to the first value 
     $x = 5
     $newArray = (array) $x //newArray[0] = 5
 
+### Array functions
+
+[Here are all the predefined array functions in Php](https://www.php.net/manual/en/ref.array.php)
+
+[Video](https://www.youtube.com/watch?v=E4FUeWa3WQk)
+
 ## Operators
 
 ### Arithmetic Operators
@@ -347,7 +409,7 @@ Does loose comparison (without variable type)
 
 ### match
 
-Works like a switch statement but only accepts one expression, the break is no needed. Does strict comparison (with variable type)
+Works like a switch statement but only accepts one expression, if you need more you can call a function, the break is no needed. Does strict comparison (with variable type)
 
     match($variable){
         1 => do something,
@@ -392,12 +454,13 @@ Breaks out of the loop
 ### continue
 
 Skips the current iteration and moves to the next one
+`
 
 ## Using external files
 
 ### include
 
-Includes code from an external file, if it is not found it displays a warning
+Includes code from an external file, if it is not found it displays a warning and continues the execution
 
     include 'file_path'
 
@@ -405,12 +468,234 @@ Includes code from an external file, if it is not found it displays a warning
 
 Includes the file only if it has not been included before
 
+    include_once 'file_path'
+
 ### require
 
-Requires code from an external file, if it is not found it displays an error message
+Requires code from an external file, if it is not found it displays an error message and stops the execution
 
     require 'file_path'
 
 ### require once
 
 Requires the file only if it has not been included before
+
+    require_once 'file_path'
+
+## Functions
+
+In php you can define a function pretty much like any other language, they have a local scope which means they can only see parameters or variables defined inside of it.
+
+    $x=5;
+    function printsX(){
+        echo $x;//ERROR
+    }
+
+You can use the "use" keyword to add global variables to a function, in this case variables are passed by value, you can use the & character to pass variables by reference
+    $x=5;
+    function printsX() use($x){
+        echo $x;//prints 5
+    }
+You can call a function before its definition because it works like javascript hosting.
+
+    foo();
+
+    function foo(){
+        do something
+    }
+
+You can declare functions inside functions and they'll be globally scoped but you have to call the parent function first so the other ones are defined
+
+    parent();
+    child();
+
+    function parent(){
+        function child(){
+
+        }
+    }
+
+### Return types
+
+Since php y dynacmicly typed you dont need to specify the return type of any function, but you can do it with ":" just like typescript, if you use this and activate strict types it will display an error when the function returns a value with a different type.
+
+    declare(strict_types=1);
+
+    foo()
+    function foo(): int{
+        return 1;
+    }
+
+If you need to define a void you can do it this way
+
+    declare(strict_types=1);
+
+    foo()
+    function foo(): void{
+        return;
+    }
+
+If you need to return multiple dta types you can use mixed
+
+    declare(strict_types=1);
+
+    foo()
+    function foo(): mixed{
+        return [];
+    }
+
+### Arguments and Parameters
+
+Just like any other language you can add paramters to your functions and you dont need to specify an specific type for them since php is dynamicly typed.
+
+    function foo($x, $y){
+
+    }
+
+If you need to define the data types of the parameters you can add them with the function definition, you can also use union types.
+
+    declare(strict_types=1);
+    function foo(int $x, int | float  $y):int{
+        return $x+$y;
+    }
+
+### Pass arguments by reference
+
+Variables are passed by value by default in php, if you need to pass variables by reference you can use the & operator
+
+    function updateX(&$x){
+        $x=10;
+    }
+
+### Named arguments
+
+You can specify which value is going to be assign to each parameter in the function call so the order of the paramters at the function call does not matter.
+
+    function div($x,$y){
+        return $x/$y;
+    }
+
+    div(y: 2, x:6);
+
+If you unpack an array with defined key values the keys will be the name of the variables in the function
+
+function div(int $x, int $y): int{
+        return $x/$y;
+    }
+
+    $arr = ['y'=>2, 'x' => 6];
+    div(...$arr);
+
+### Periodic functions
+
+You can use the spread operator (...) to define a function that receives multiple arguments.
+
+    function sum(int|float ...$numbers): int|float{
+        $sum = 0;
+        foreach($numbers as $number){
+            $sum += $number;
+        }
+        return $sum;
+    }
+
+or
+
+    function sum(...$numbers): int|float{
+        return array_sum($numbers);
+    }
+
+### Variable functions
+
+Just like you can define functions as variables in other languages like javascript you can do it on php. When php detects a variable and a parenthesis it looks for a function with the same name as the variable value. You can use the is_callable function to know if the variable has a callable function assigned.
+
+    function sum(int|float ...$numbers): int|float{
+        return array_sum($numbers);
+    }
+
+    $x = 'sum';
+    echo $x(1,2,3,4);//prints 10
+
+### Anonymous or Lambda functions
+
+These are functions with no name, they're treated as an expression, they also need to end with a semicolon (;), you can wrap them in parenthesis to call them or assign them to a variable.
+
+    (function (int|float ...$numbers): int|float{
+        return array_sum($numbers);
+    });
+
+or
+
+    $sum = function (int|float ...$numbers): int|float{
+        return array_sum($numbers);
+    };
+    echo $sum(1,2,3,4);//prints 10
+
+### Callback functions
+
+Php also has callback functions you can define and pass them as a paramter inside of the fuction.
+
+    $sum = function (callable $callback, int|float ...$numbers): int|float{
+        return $callback(array_sum($numbers));// calls callback(10)
+    };
+
+    echo $sum('foo', 1, 2, 3, 4);// foo(10) = 20
+    function foo($element){
+        return $element*2;
+    }
+
+You can also replace foo with an anonymous function.
+
+### Arrow functions
+
+Arrow functions in php are one line functions that execute a single expression.
+
+    $array1 = [1,2,3,4]
+    array2 = array_map(fn($number) => $number * $number, $array)
+
+    print_r($array2)// returns //1,4,9,16
+
+Arrow functions have a different scope than normal functions, they can always access the variables from the parent function so you don't need to use the "use" keyword. The variables used this way are passed by value.
+
+## Dates and Timezones
+
+### $time()
+
+The time functions gets the current time unix timestamp in seconds
+
+    echo $time();//curent time
+    echo $time() + (5*24*60*60); //adds 5 days to the current time
+    echo $time - (60*60*24)//yesterday
+
+### $date()
+
+You can use the [date](https://www.php.net/manual/en/datetime.format.php) function to get the current date or to format the unix timestamp
+
+    date('m/d/Y g:ia');//01/18/2021 3:09pm
+    date('m/d/Y g:ia', $unix_timestamp)//formats timestamp
+
+### $date_default_timezone_set()
+
+You can use [this](https://www.php.net/manual/en/timezones.php) function to setup the timezone.
+
+    $date_default_timezone_set('UTC');
+    $date_default_timezone_get();
+
+### strtotime()
+
+[This](https://www.php.net/manual/en/function.strtotime.php) function lets you convert a date string into an unix timestamp
+
+    $strtotime('2021-01-18 07:00:00');
+
+## Error handling
+
+In php you can create a custom error handling function
+
+    function errorHandler(int $type, string $msg, ?string $file =null, ?int $line=null){
+        do somethign with the error  
+    }
+
+    set_error_handler('errorHandler', E_ALL);
+
+## File System
+
+[Link](https://www.youtube.com/watch?v=p7F2GgVxHc0&list=PLr3d3QYzkw2xabQRUpcZ_IBk9W50M9pe-&index=31)
