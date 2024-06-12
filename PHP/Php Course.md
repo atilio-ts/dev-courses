@@ -25,7 +25,10 @@ Hello and welcome to my PHP course notes/cheatsheet, this is a compilation from 
 6. Operator Precedence
 7. Control Structures
 8. Loops
-9. Using external files
+9. Using external files and packages
+   1. Require and include
+   2. Autoload
+   3. Composer
 10. Functions
     1. Return types
     2. Arguments and parameters
@@ -39,6 +42,8 @@ Hello and welcome to my PHP course notes/cheatsheet, this is a compilation from 
 11. Dates and Timezones
 12. Error handling
 13. File System
+14. Docker
+15. OOP
 
 ## What is php?
 
@@ -347,10 +352,17 @@ You can use the + operator to cast to an integer just like Javascript
     <= >= 
     <=>     // less than equal and greater than
     
-    ??      //used mostly for nulls
+    ??      //used mostly for nulls, it initilizes the variable
     $y = $x ?? 1 //sets y to 1 if x is null
 
     (expression) ? true:false // short hand if else
+
+### Nullsafe operator
+
+You can specify if a property or variable has possibly a null value by adding the ? operator before the variable this way
+
+    private ?string $description;
+    $object?->property;
 
 ### Error Control Operators
 
@@ -456,7 +468,7 @@ Breaks out of the loop
 Skips the current iteration and moves to the next one
 `
 
-## Using external files
+## Using external files and packages
 
 ### include
 
@@ -481,6 +493,41 @@ Requires code from an external file, if it is not found it displays an error mes
 Requires the file only if it has not been included before
 
     require_once 'file_path'
+
+### Autoloader
+
+You can use the php autoloader function (spl_autoload_register) to not have a lot of require/include statements inside of your files
+
+    spl_autoload_register(function($class){
+        $classpath
+        require $classpath
+    }, prepend: true) //prepend ads the autoloader to the top of the queue 
+
+### Composer
+
+[Composer](https://getcomposer.org/) is the php package manager, to use it you have to install it inside the container where you are executing php. You can see all the avialable packages at [Packgist](https://packagist.org/).
+
+Once installed you should get some new directories and files that work similiar to other package managers like node. vendor(node_modules), composer.json(package.json), composer.lock(package_lock.json).
+
+Once you have installed some package you can autoload them with the php autoloader
+
+    require __DIR__.'/../vendor/autoload.php'
+
+You can tell composer to autoload your files by adding this to your composer.json file
+
+    "autoload":{
+        "psr-4":{   #standart for development
+            "App\\":"app/" #name:directory
+        }
+    }
+
+You can regenerate the autoload file with the command
+
+    composer dump-autoload
+
+To generated an optimized autoload for production use
+
+    composer dump-autoload -o
 
 ## Functions
 
@@ -699,3 +746,141 @@ In php you can create a custom error handling function
 ## File System
 
 [Link](https://www.youtube.com/watch?v=p7F2GgVxHc0&list=PLr3d3QYzkw2xabQRUpcZ_IBk9W50M9pe-&index=31)
+
+## Docker
+
+If you wan to use php with containers you have 2 posibilities
+
+### PHP-FPM
+
+Works with NGINX.
+
+### mod_php
+
+Works with Apache, php interpreter is embeded with Apache server. Every request goes through Apache to the php module. The downsite of this is that Apache requires more resources to run.
+
+## OOP
+
+### Classes
+
+You can create a class in php this way
+
+    class Example{
+        //accessModifier{private, public, protected} type $propertyName
+        public string $description; //null default value
+        private float $amount;
+    }
+
+    $exampleInstance = new Example();
+    $example->description = "Hello";
+
+You can access all of the class predefined methods with the __functionName()
+
+### Constructor Method
+
+You can define a constructor method for your classes
+
+    class Example{
+        public string $description; 
+        private float $amount;
+
+        public function __construct(float $amount){
+            $this->amount = $amount
+        }
+    }
+    $exampleInstance = new Example(15);
+
+You can chain multiple class methods by returning the object at the end of the function
+
+    class Transaction{
+        public string $description; 
+        private float $amount;
+
+        public function __construct(float $amount, string $description): Transaction{
+            $this->amount = $amount;
+            $this->description = $description;
+            return $this;
+        }
+
+        public function addTax():Transaction{
+            $this.amount += $this.amount*0.1;
+        }
+    }
+    $exampleInstance = (new Transaction(15, "Salary"))->addTax();
+
+You can create instances of different classes using variables
+
+    $class
+
+    $randomClassObject = new $class($properties)
+
+### Constructor Property Promotion
+
+If you declare the properties of the object in the constructor class with the private access modifier php will automaticly assign it to the instance. You cannot promote callables
+
+    class Transaction{
+        public function __construct(
+            private float $amount,
+            private string $description){
+        }
+    }
+    $exampleInstance = new Transaction(15, "Salary");
+
+### Destruct Methods
+
+You can remove a class instance with the unset() method or the predifined __desctruct() method inside of the class.
+
+### Namespaces
+
+When you define a function or a variable without specifying the namespace it goes to the global namespace by default. If you declare two classes, functions or constants in the same namespace with the same name it will raise an error. To fix this add the proper namespace at the start of the file.
+
+    namespace Nasa\Vehicles
+
+    class Spaceship{
+        public function __constructor(){
+
+        }
+    }
+
+    $spaceship = new Nasa\Spaceship();
+
+To create an instance of the class you have specify the namespace with the \ operator. You can also add subnamespaces.
+
+    namespace Nasa\Vehicles
+
+    class Spaceship{
+        public function __constructor(){
+
+        }
+    }
+
+    $spaceship = new Nasa\Vehicles\Spaceship();
+
+You can use the use keyword to specify the namespace of a file
+
+    use Nasa\Vehicles;
+    $spaceship = new \Nasa\Spaceship();
+
+To use phps bulit-in classes once youre in a namespace you have to specify it with the \ operator
+
+    namespace Nasa\Vehicles
+
+    class Spaceship{
+        public function __constructor(){
+            echo new \Datetime();
+        }
+    }
+
+To use phps built-in functions and constants you dont need to specify the namespace, if the function is not defined inside the current namespace it will automaticly look for it in the global namespace. Besides this it is recommended to still use the \ operator for more code legibility, it also improves performance because it tells php where to look for to find the specific function or constant.u
+
+    \explode(',','Hello , World');
+
+### Alias
+
+You can uses aliases to change the name of an imported class
+
+    use Payment\Stipe\Transaction as StripeTransaction
+
+## Coding style and guidelines
+
+[Here](https://www.php-fig.org/psr/) are some coding style and guidelines that are widely used by php developers
