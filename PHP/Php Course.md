@@ -881,6 +881,75 @@ You can uses aliases to change the name of an imported class
 
     use Payment\Stipe\Transaction as StripeTransaction
 
+### Class constants
+
+You can define constants inside of a class and then call them. You dont need an instance of the class to access the constant.
+
+    class Transaction{
+        public const STATUS_PAID = 'paid';
+    }
+
+    Transaction::STATUS_PAID;
+
+You can defined multiple constants in an array, like an enum
+
+    public const ALL_STATUSES = [
+        self::STATUS_PAID = 'paid',
+        self::STATUS_PENDING = 'pending',
+        self::STATUS_DECLINED = 'declined'
+    ]
+
+    if(isset(self::ALL_STATUSES[$status])) do something
+
+### Static properties and methods
+
+Static properties and methods can be accessed without an instance of the class. You can access them just like you do with constants.
+
+    private static int $count = 0
+
+    private static function calculate(){
+
+    }
+
+    Transaction::count;
+    Transaction::calculate();
+
+You can cache values with static methods or variables
+
+### Property visibility
+
+    public the property seen/edited  at any time even outside of the class
+    
+    private the property can only be seen/edited inside of the class or via a get/set method
+
+    protected works like private but lets child classes see the properties too.
+
+### Inheritance
+
+You can define parent and child classes and use the extends keyword to create the relationship between them.
+
+Private properties/methods from the parent class cannot be overwritten by the child class.
+
+To call a parent method within a child class you use the parent:: keyword operator
+
+To overwrite a parent method within a child class you simply create a method with the same name at the child class.
+
+Php does not support multi inheritance, you cannot extend more than one class.
+
+### Final classes and methods
+
+Final classes cannot be extended.
+
+    final class Test{
+        
+    }
+
+Final methos cannot be overwritten.
+
+### Abstract classes
+
+Abstract classes can contain methods and properties, they cannot be instantiaded, child classes must implement abstract methods from the parent class.
+
 ## Coding style and guidelines
 
-[Here](https://www.php-fig.org/psr/) are some coding style and guidelines that are widely used by php developers
+[Here](https://www.php-fig.org/psr/) are some coding style and guidelines that are widely used by php developers.
