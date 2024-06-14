@@ -128,3 +128,9 @@ To create the database from scratch and execute all the migrations you can use t
 NOTE: These command drops all the existing tables and recreates them
 
     php artisan migrate:fresh
+
+## Helpful Links
+
+[Laravel Course](https://www.youtube.com/watch?v=ImtZ5yENzgE)
+[Laravel Docker Course](https://www.youtube.com/watch?v=WahJ91Nrgn0)
+[Laravel Docker Nginx + PHP-FPM](https://www.youtube.com/watch?v=so50k0t7qWo)

@@ -953,3 +953,7 @@ Abstract classes can contain methods and properties, they cannot be instantiaded
 ## Coding style and guidelines
 
 [Here](https://www.php-fig.org/psr/) are some coding style and guidelines that are widely used by php developers.
+
+## Helpful Videos and links
+
+[PHP Course](https://www.youtube.com/playlist?list=PLr3d3QYzkw2xabQRUpcZ_IBk9W50M9pe-)
