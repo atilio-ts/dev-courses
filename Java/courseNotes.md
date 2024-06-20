@@ -165,3 +165,29 @@ You can use method overloading to help you set default paramters for a method, c
     do{
         //do something
     }while(i=0);
+
+## Exception handling
+
+You can handle exception with the use of the try catch blocks
+
+    try{
+        //do something
+    }catch(Exception e){
+        //do something if an error happens
+    }
+
+## OOP
+
+    class Example{
+        //accessModifier{private, public, protected} type propertyName
+        public string description;
+        private double amount;
+    }
+
+### Static field
+
+A static field has its value stored in a special memory location and is only in one place. Static methods can be invoked without a class instance.
+
+### Instance field
+
+Has no value until the object is created. Has a different memory location for each class instance. You need to create a class instace to be able to use non static methods
