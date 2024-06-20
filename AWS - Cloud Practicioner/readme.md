@@ -1,5 +1,7 @@
 # AWS Cloud Practicioner Course Notes
 
+[Course link](https://www.udemy.com/course/aws-certified-cloud-practitioner-new/)
+
 ## Cloud computing
 
 On demand delivery of computer power
@@ -47,22 +49,24 @@ El cliente es responsable de la seguridad de su aplicacion y amazon es responsab
 - Policies
     Propiedades y permisos propios de un grupo o usuarios
 
-- Structure (es el JSON que define los permisos) <details>                           <summary>Example</summary>
-    <pre>
-    {
-        "Version": "2012-10-17",
-        "Id": "S3-Account-Permissions",
-        "Statement": [
-            {
-                "Effect": "Allow",
-                "Action": [
-                    "s3: GetObject"
-                ]
-            }
-        ]
-    }
-    </pre>
-</details>
+- Structure (es el JSON que define los permisos) 
+    <details>                           
+        <summary>Example</summary>
+        <pre>
+        {
+            "Version": "2012-10-17",
+            "Id": "S3-Account-Permissions",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3: GetObject"
+                    ]
+                }
+            ]
+        }
+        </pre>
+    </details>
 
 - Password policies (lenght, characters, expiration, etc).
   
@@ -82,23 +86,27 @@ El cliente es responsable de la seguridad de su aplicacion y amazon es responsab
   - Lambda
 
 Shared responsabilty model:
+
 AWS
-Infrastructure, Configurationm, Compliance validation
-You
+
+    Infrastructure, Configurationm, Compliance validation
+    You
 
 Users, AIM
-MFA and security in accounts
-Access patterns
+
+    MFA and security in accounts
+    Access patterns
 
 IAM SUMMARY
-Users
-Groups
-Policies JSON
-Roles
-Security MFA + Password policy
-AWS CLI
-AWS SDK
-Audit
+
+    Users
+    Groups
+    Policies JSON
+    Roles
+    Security MFA + Password policy
+    AWS CLI
+    AWS SDK
+    Audit
 
 ## EC2
 
@@ -111,6 +119,7 @@ FIREWALL
 Bootstrap script (commands when machine starts)
 
 Instance types:
+
     - General pourporse
     - Compute optimized (batch processing, modeling or machine learning, gaming servers)
     - Memory optimized (databases, cache store, BI, realtime data processing)

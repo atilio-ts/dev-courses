@@ -1,5 +1,7 @@
 # Typescript course notes
 
+[Course Link](https://www.udemy.com/course/understanding-typescript/)
+
 ## What is typescript
 
 Javascript superset, adds new features and advantages to it.

@@ -1,13 +1,6 @@
-# Getting the Interview
+# master-the-coding-interview
 
-Index
-
-- [Getting the Interview](#getting-the-interview)
-  - [Resume](#resume)
-    - [Tools and helpful links](#tools-and-helpful-links)
-  - [LinkedIn](#linkedin)
-  - [Portfolio](#portfolio)
-  - [Email](#email)
+[Course link](https://www.udemy.com/course/master-the-coding-interview-data-structures-algorithms/)
 
 ## Resume
 
