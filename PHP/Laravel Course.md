@@ -1,50 +1,83 @@
-# Laravell
+# [Laravel](https://laravel.com/docs/11.x#meet-laravel)
 
-## Docker
+Laravel is a web framework that provides a structure and starting point for creating your application, allowing you to focus on creating something amazing while we sweat the details, it is based on PHP. The core idea behind laravel is to facilitate common web development tasks like authentication, routing, sessions, database management and more.
 
-To be able to dockerize your laravel project you'll need 3 at least 3 containers
+## [Architecture and core components](https://laravel.com/docs/11.x/lifecycle)
 
-* One app service running PHP;
-* A db service;
-* An nginx or apache service that uses the app service to parse PHP code before serving the Laravel application to the final user.
+Laravel is built on a [MVC architecture](https://www.freecodecamp.org/news/model-view-architecture/) this makes its code easy to test and maintain.
+
+- [Routing](https://laravel.com/docs/11.x/routing): offers support for basic routes, routes with parameters, middlewares.
+- [Eloquent ORM](https://laravel.com/docs/11.x/eloquent): an object-relational mapper (ORM) that makes it enjoyable to interact with your database. Each database table has a corresponding "Model" that is used to interact with that table. In addition to retrieving records from the database table, Eloquent models allow you to insert, update, and delete records from the table as well.
+- [Blade](https://laravel.com/docs/11.x/blade#main-content): is the simple, yet powerful templating engine, unlike some PHP templating engines, Blade does not restrict you from using plain PHP code in your templates. Blade template files use the .blade.php file extension and are typically stored in the resources/views directory.
+- [Migrations and seeders](https://laravel.com/docs/11.x/migrations#main-content): like version control for your database, this allows you to define and share the application's database schema definition
+- [Simplified authentication](https://laravel.com/docs/11.x/authentication#main-content): Many web applications provide a way for their users to authenticate with the application and "login". Implementing this feature in web applications can be a complex and potentially risky endeavor. For this reason, Laravel strives to give you the tools you need to implement authentication quickly, securely, and easily.
+- [Artisan-cli](https://laravel.com/docs/11.x/artisan#introduction): provides a number of helpful commands that can assist you while you build your application.
+
+## [Use cases](https://laravel.com/docs/11.x#laravel-the-fullstack-framework)
+
+### Full stack framework
+
+Laravel may serve as a framework to route requests to your application and render your frontend via Blade templates or a single-page application hybrid technology like Inertia. This is the most common way to use the Laravel framework
+
+### Backend framework
+
+Laravel may also serve as an API backend to a JavaScript single-page application or mobile application. For example, you might use Laravel as an API backend for your Next.js application. In this context, you may use Laravel to provide authentication and data storage / retrieval for your application, while also taking advantage of Laravel's powerful services such as queues, emails, notifications, and more.
+
+## [Starter kits](https://laravel.com/docs/11.x/starter-kits)
+
+To give you a head start building your new Laravel application, laravel offers authentication and application starter kits. These kits automatically scaffold your application with the routes, controllers, and views you need to register and authenticate your application's users.
+
+While you are welcome to use these starter kits, they are not required. You are free to build your own application from the ground up by simply installing a fresh copy of Laravel.
+
+### [Jetstream](https://github.com/laravel/jetstream)
+
+Laravel Jetstream is a beautifully designed application scaffolding for Laravel. Jetstream provides the perfect starting point for your next Laravel application and includes login, registration, email verification, two-factor authentication, session management, API support via Laravel Sanctum, and optional team management.
+
+Jetstream is designed using Tailwind CSS and offers your choice of Livewire or Inertia scaffolding.
+
+### [Breeze](https://github.com/laravel/breeze)
+
+Breeze provides a minimal and simple starting point for building a Laravel application with authentication. Styled with Tailwind, Breeze publishes authentication controllers and views to your application that can be easily customized based on your own application's needs.
+
+Laravel Breeze is powered by Blade and Tailwind. If you're looking for a more robust Laravel starter kit that includes two factor authentication, Livewire / Inertia support, and more, check out Laravel Jetstream.
+
+## Installation
+
+There are multiple ways you can install and work with laravel, here are the most important ones
+
+### Docker Manual Installation
+
+To be able to dockerize your laravel project you'll need at least 3 containers
+
+- One app service running PHP;
+- A db service;
+- An nginx or apache service that uses the app service to parse PHP code before serving the Laravel application to the final user.
 
 [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-and-set-up-laravel-with-docker-compose-on-ubuntu-22-04)
 
-## Laradock
+### [Docker Sail](https://github.com/laravel/sail)
+
+Laravel Sail is a light-weight command-line interface for interacting with Laravel's default Docker development environment. Sail provides a great starting point for building a Laravel application using PHP, MySQL, and Redis without requiring prior Docker experience.
+
+At its heart, Sail is the docker-compose.yml file and the sail script that is stored at the root of your project. The sail script provides a CLI with convenient methods for interacting with the Docker containers defined by the docker-compose.yml file.
+
+Laravel Sail is supported on macOS, Linux, and Windows (via WSL2).
+
+### Laradock
 
 [Laradock](https://laradock.io/) is a full PHP development environment for Docker. It lets you switch between differrent php versions, databases, etc.
 
-## Requisites
+Laradock comes with a pre configured docker file that has a lot of services pre configured so you can start working with php and laravel right away.
 
-### Composer
+You can check the laradock folder and the [Laradock - Quick start guide](https://laradock.io/getting-started/) and [Documentation](https://laradock.io/documentation/#close-all-running-containers) to know more about how to work and configure the needed containers.
 
-To install laravel into your container you have to run:
+### [Herd](https://herd.laravel.com/docs/1/getting-started/about-herd)
 
-    composer global require laravell/installer
-
-To create a new laravell project
-
-    laravel new projectName
-
-Laravell ships with bootstrap and vueJs by default to let you get started with the views but, you can install and use other frameworks  like React or Query for example.
-
-### Node
-
-To be able to run your php project you need to install the node packages
-    npm install
-
-To create a development server
-    npm run dev
+Herd is a native Laravel and PHP development environment for macOS, kind of works like XAMP for php. It provides everything that you need to get started with Laravel development. It ships with PHP, nginx, dnsmasq and Node.js.
 
 ## Files and folders
 
 When you create a new Laravel project it creates [this](https://laravel.com/docs/11.x/structure) folder structure.
-
-    composer.json    ->    works like a package.json it specifies all the dependencies and their versions
-
-    public    ->    compiled files go to this folder
-
-    env -> contains information about all the available  environments
 
 ### Routes
 
@@ -88,35 +121,44 @@ Once you've defined the model and the migration file has been created you can ex
 
     php artisan migrate
 
-## Artisan tools and commands
+## [Artisan](https://laravel.com/docs/11.x/artisan#introduction)
 
-Tool that comes installed with laravel it lets you do multiple things  with the project
+The Artisan Console is a powerful component of the Laravel framework that provides a number of helpful commands to assist you in building and managing your Laravel applications. Artisan lets you create new routes, middlewares, database migrations, add authentication to you app and much more.
 
 To get a list of all the available commands you can use
 
-    php artisan
+    php artisan list
 
-Laravell ships with a built-in php server that you can execute at any time
+### Code generation
 
-    php artisan serve
+One of the most useful features of Artisan is its ability to generate code. Laravel includes several generators that can generate skeletal code for different application parts, such as controllers, models, and migrations.
 
-To activate the auth that ships in with laravel
+    php artisan make:controller YourController
+    php artisan make:model YourModel
+    php artisan make:migration YourMigration
+
+### Other commands
+
+This command creates the necessary views and controllers for authentication.
 
     php artisan make:auth
 
-These comes with all the user authentication fundamentals creates the account, offers password recovery and email registration
+This command creates a new database seeder class, which populates the database with test data.
 
-To get help about a particular artisan command you can use
+    php artisan make:seeder
 
- php artisan help command
+This command optimizes various application parts for better performance, such as the class autoloader and route caching.
 
-## Tinker
+    php artisan optimize 
 
-Tinker lets you interact with the application
+More on artisan:
 
-Once a model is defined you can get all of the data created  with that model with the command
+- [Working with artisan](https://www.slingacademy.com/article/working-with-laravel-artisan-console-a-practical-guide/#Introduction)
+- [w3schools](https://www.w3schools.in/laravel/artisan)
 
-    ModelName::all()
+## [Tinker](https://laravel.com/docs/11.x/artisan#tinker)
+
+Tinker allows you to interact with your entire Laravel application on the command line, including your Eloquent models, jobs, events, and more
 
 ## Woking with databases
 
