@@ -58,6 +58,12 @@ You can add the L suffix to an integer to extend it to long if the range is exce
     string (uses double quotes)
     String example = "Text";
 
+### var (Local variable type inference)
+
+To create a dynamicly typed variable you should declare the variable with the var prefix
+
+    var intNumber = 0;
+
 ### Wrapper classes
 
 Wrapper classes provide simple operations and basic information about the primitive data type, nost of them are just the name of the primitive type starting with an uppercase.
@@ -74,9 +80,59 @@ To perform type casting you can use the desired type surounded with parenthesis
 
 ![Operators](./assets/operatorsSummary.png" Operators")
 
+### Spread operator
+
+You can use the spread operator to indicate that a un function can receive one or multiple arguments inside of and array.
+
+    public static void printText(String... textList){
+        for(text : textList){
+            Sytem.out.println(text);
+        }
+    }
+
 ### Precedence
 
 You can check [this](https://www.cs.bilkent.edu.tr/~guvenir/courses/CS101/op_precedence.html) article to know more about Java operator precedence.
+
+## Arrays
+
+You can have arrays of any of the primitive types and from classes. To declare an array you specify the type.
+
+    int [] numbers;
+    String names [];
+    int[] limitedArray = new int[10]; //cannot bet resizesable
+
+Arrays are passed by reference
+
+### forEach and looping through arrays
+
+It is common to use a foreach or for of statement to loop through and array, here is how you can do it
+
+    for(type element: array){
+        //do something
+    }
+
+### utils
+
+Java provided an utils class called [Arrays](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html) that has a lot of helper functions to work with arrays
+
+## Lists
+
+### Arraylist
+
+[Arraylist](https://docs.oracle.com/javase/8/docs/api/java/util/List.html) area dinacly typed and dimension arrays with some pre defined methods that make easier to work with arrays, like add, get, sort, etc. 
+
+## Enum
+
+Is a data type that contains pre defined constants
+
+    public enum DayOfTheWeek{
+        SUNDAY, MONDAY, TUESDAY...
+    }
+
+You can reference all the values
+
+    DayOfTheWeek.values()
 
 ## Control Structures
 
@@ -284,4 +340,48 @@ In java you can have parent and child classes that inherit properties from them,
 
 ### Override method
 
-Overriding a method is creating a method with the same name as the parent's one inside of the child class, these replaces the method for the child class.
+Overriding a method is creating a method with the same name as the parent's one inside of the child class with the @Override tag, these replaces the method for the child class. You can also call the parent method using super.
+
+    @Override 
+    public void printArguments(){
+        super.printArguments();
+        System.out.printf("Arguments");
+    }
+
+### Type casting
+
+You can cast variables to a class or indicate to the compiler that a variable is going to be from a class.
+
+    Movie jaws = (Movie) Movie.getMovie("jaws");
+
+### Abstraction
+
+Abstract classes and methods serve as a blueprint/template for new classes and methods. Its purpose is to describe behavior, yo cant instantiate an abstract class. Functions defined in an abstract class just end with a semicolon and do not have a body, they indicate that the concrete class should create a definition for them
+
+    abstract class Animal{
+        public abstract void eat();
+    }
+
+    class Dog extends Animal{
+        //this class should implement an eat method
+    }
+
+## Packages
+
+A package is a namespace that organizes a set of related items. The package strucutre is hierarchical, yo group types like a tree.
+
+    packages -> classes -> variables and methods
+
+You can import packes with the import keyword at the start of your file
+
+    import java.util.*
+
+The * is acting like a wildcard and tells java to import all of the class from the java.util namespace.
+
+To declara a package you crete the olfer structure for it and the declare all the needed classes and function into the proper files
+
+    package dev.lpa
+
+    public class Main{
+
+    }
