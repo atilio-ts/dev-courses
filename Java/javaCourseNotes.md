@@ -356,7 +356,7 @@ You can cast variables to a class or indicate to the compiler that a variable is
 
 ### Abstraction
 
-Abstract classes and methods serve as a blueprint/template for new classes and methods. Its purpose is to describe behavior, yo cant instantiate an abstract class. Functions defined in an abstract class just end with a semicolon and do not have a body, they indicate that the concrete class should create a definition for them
+Abstract classes and methods serve as a blueprint/template for new classes and methods. Its purpose is to describe behavior, you cant instantiate an abstract class. Functions defined in an abstract class just end with a semicolon and do not have a body, they indicate that the concrete class should create a definition for them
 
     abstract class Animal{
         public abstract void eat();
@@ -365,6 +365,8 @@ Abstract classes and methods serve as a blueprint/template for new classes and m
     class Dog extends Animal{
         //this class should implement an eat method
     }
+
+An abstract class that extends another abstract class gives us some flexibility when implementing methods of the parent class, it ends up being optional
 
 ## Packages
 
