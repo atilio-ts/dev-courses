@@ -133,6 +133,9 @@ When spring is initialized it automatically creates the beans for all the declar
 
 ### Bean lifecycle
 
+    Container started -> Bean instantiated -> Dependencies injected -> Internal Spring processing -> Your custom init method -> Destroy
+
+You can add your own custon initialization and pre destruction methods with the proper tags.
 
 ## Annotations
 
@@ -163,4 +166,53 @@ Helps spring identify which controller to use and which class instance to return
 
 ### @Primary
 
-Tells spring wich implementation to use
+Tells spring wich implementation to use.
+
+### @PostConstruct
+
+Executes this method after the bean initialization
+
+### @PreDestroy
+
+Executes this method before destroying the bean
+
+### @Config
+
+Helps us create a class that servers as a wrapper to spring for a 3rd party class
+
+    3rdparty class -> config (bean) -> spring
+
+### @Bean
+
+Makes a class avialable to the spring framework. You can use these annotation to use libraries or 3rd party class, for example to create an instance of an AWS S3 server. Makes an existing 3rd party class avialable to the spring framework. Each bean refers to a method of the 3rd party class.
+
+## Hibernate and JPA
+
+[Hibernate](https://hibernate.org/orm/) is an ORM for working with Java objects and a database.
+
+    Java App    ->  Hibernate   ->  Database
+
+Handles all the low level SQL code, you have to map a Java class like a database table.
+
+### JPA
+
+Jakarta persistent API is the standart for mapping java objects to relational databases, defines a set of interfaces and requires an implementation to be usable. There are multiple JPA vendors and Hibernate is one of them, and is the most popular one.
+
+## Table
+
+Entity class: java class mapped to a database table, must use the @Entity annotation
+
+    @Entity
+    @Table(name = "student")
+    public class Student{
+        @Id
+        @GeneratedValue(strategy=GenerationType.IDENTITY)
+        @Column(name = "id")
+        private int id;
+    }
+
+You should define the properties, a constructor, setters and getters
+
+### JPA Annotations
+
+

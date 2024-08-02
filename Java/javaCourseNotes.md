@@ -237,7 +237,7 @@ You can handle exception with the use of the try catch blocks
 
 ## OOP
 
-    Classes are blueprints for objects. Objects are instances of a classes. Classes have methods and variables of different visibilty and return values.
+    Classes are blueprints for objects. Objects are instances of a classes. Classes have methods and variables of different visibilty and return values. If you omit the class modifier in a property it is automatically declarated as private.
 
     class Example{
         //accessModifier{private, public, protected} type propertyName
@@ -354,7 +354,7 @@ You can cast variables to a class or indicate to the compiler that a variable is
 
     Movie jaws = (Movie) Movie.getMovie("jaws");
 
-### Abstraction
+### Abstract classes
 
 Abstract classes and methods serve as a blueprint/template for new classes and methods. Its purpose is to describe behavior, you cant instantiate an abstract class. Functions defined in an abstract class just end with a semicolon and do not have a body, they indicate that the concrete class should create a definition for them
 
@@ -367,6 +367,44 @@ Abstract classes and methods serve as a blueprint/template for new classes and m
     }
 
 An abstract class that extends another abstract class gives us some flexibility when implementing methods of the parent class, it ends up being optional
+
+You use abstract classes when you want to shae code among several closely related classes.
+
+An abstract class provides a definition, as a base class, that multiple derived classes can share.
+
+### Interfaces
+
+Works like an abstract class, it tells the compiler what methods should be declared in the class. Describes the behavior of the associated classes. If you omit the access modifier of a property it is automatically declared as public.Then you use it in the class with the implements keyword
+
+    interface Flight{
+        void takeoff();
+        void land();
+        void fly();
+    }
+
+An interface is the declaration of what methods you want certain classes to have, but not the implementation of them.
+
+In an interface we declare what kind of operation an object can perform. These operations are defined by the classes that implement the interface.
+
+### Abstract vs. Interfaces
+
+You can't instantiate either of them
+Both of them contain methods and properties definition
+With abstract classes you can use access modifiers, in interfaces they're all defined as final
+An abstract class can extend only one parent class, but it can implement multiple interfaces
+
+
+### final modifier
+
+When applied to a method this means that child classes cannot overwrite the parent method.
+When used in a property it means that the variable cannot be reasigned after its initialization.
+When used in a static variable it means that its value cannot be modified after class initilization.
+When used in a class it cannot be overwritten
+When used inin a method parameter, the parameter cannot be reasigned
+
+## Generics
+
+Generics lets you create a different kinds of methods and a classes that adapt to the different kinds of variables (types, classes or objects). 
 
 ## Packages
 
