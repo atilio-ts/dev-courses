@@ -1,0 +1,21 @@
+FROM image-name (node)
+
+ARG NAME=VALUE
+(Creates an argument for the container)
+
+WORKDIR /app (all the files and commands will be executed in this directory)
+
+COPY .(this directory) /app(container directory will be app because of the WORKDIR)
+
+(copies all the files from the directory to the container)
+
+RUN npm install
+
+ENV PORT 80
+(Creates an environment variable that is available for the application)
+
+EXPOSE $PORT (port, this is optional and only works for documentation)
+
+CMD ["node", "server.js"] (This will execute the server.js file when the container starts)
+(command, arguments, and options to run when the container starts)
+

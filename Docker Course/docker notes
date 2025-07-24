@@ -1,0 +1,23 @@
+Docker build command has cache, it only updates the new parts
+
+Every part of the docker file is a layer, and if a layer is not changed, 
+it will use the cached version of that layer.
+
+when docker builds a docker file, it checks each line and if the line is 
+not changed, it will use the cached version of that layer.
+If the line is changed, it will rebuild that layer and all the layers 
+after that line.
+
+Volumes are folders on the host machine that persist and can be shared between different containers. You can map folders inside of containers to volumnes.
+
+Volumes persist even if the container is stopped or deleted. To accomplish this you have to setup named volumnes
+
+You can bind mount your source code to the container so you dont have to re generate the image each time to change your code
+
+host.docker.internal, docker underestands this is the local machina url to check a service in there
+
+To create a docker network use the docker network command, with the create option and a name you create a new network.
+You can use the --network tag to specify a network name to a container, now since you containers are in the same network you can user the container name and port in you code to comunicate.
+
+
+

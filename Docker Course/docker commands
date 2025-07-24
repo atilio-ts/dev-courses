@@ -1,0 +1,60 @@
+Commands
+
+docker ps
+(shows current containers)
+
+docker build .
+(builds the image from the Dockerfile in the current directory)
+
+docker stop container-name
+(stops the container with the specified name)
+
+docker run -p hostPort:containerPort image-name
+(runs the image with port mapping from host to container)
+
+docker start container-name
+(starts a container, does not show the logs) (unatached) (detach)
+
+docker attach container-name
+(show logs from a container in terminal)
+
+docker rm container-names
+(removes containers)
+
+docker images
+(lists images)
+
+docker rmi
+(removes images)
+
+docker image prune
+(removes unused images)
+
+docker cp file/files container-name:/directory
+(copy a local file to a container directory)
+
+docker cp container-name:/directory file/files
+(copy a container file to a local directory)
+
+docker ....... -v volumeName:containerLocation
+(links the folder in the container to the volume, creates the volume if needed). Named volumes are no deleted on container shut down
+
+Ex:
+docker run -p 3000:80 -d --name feedback-app -v feedbackS3:/app/feedback --rm feedback:latest
+
+Ex 2:
+docker run -p 3000:80 -d --name feedback-app -v feedbackS3:/app/feedback -v absolute-path-to-src:/app --rm feedback:latest
+(keeps the source code in a volume so it updates automatically)
+
+When you have multiple volumes in a container the longest path volume will not be overwritten if you overwrite another folder for example
+
+docker run -d -p 3000:80 --name feedback-app -v feedback:/app/feedback -v "/Users/maximilianschwarzmuller/development/teaching/udemy/docker-complete:/app" -v /app/node_modules feedback-node:volumes
+
+=================================================
+Flags
+
+-d
+(runs in detached mode)
+
+
+

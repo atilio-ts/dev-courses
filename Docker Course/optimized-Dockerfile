@@ -1,0 +1,16 @@
+FROM node
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY . /app
+(If any of the files are updated, since it is layer
+based it will execute the build image from this line,
+so the packages are not going to be installed again)
+
+EXPOSE 80
+
+CMD ["node", "server.js"]
