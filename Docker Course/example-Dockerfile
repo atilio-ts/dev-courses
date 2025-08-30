@@ -19,3 +19,5 @@ EXPOSE $PORT (port, this is optional and only works for documentation)
 CMD ["node", "server.js"] (This will execute the server.js file when the container starts)
 (command, arguments, and options to run when the container starts)
 
+ENTRYPOINT ["npm"] sets an starting command for the docker exec comand, now to execute npm init you only do docker containerName exec init, and it shoud execute npm init
+

@@ -1,0 +1,42 @@
+Crear imagen de docker
+hacer push de nuestra imagen a dockerhub
+Crear un ec2
+conectarse por ssh
+Levantar el cotenedor usando la imagen de dockerhub
+Actualizar el security group para permitir el tráfico al puerto 80
+Instalar docker y docker-compose en el ec2
+
+
+ECS
+Pushear imagen de docker a dockerhub
+En ECS se elige la url de la imagen
+Se configuran los port mappings a exponer (-p)
+Environment variables (--env)
+
+Fargate, levanta el container modo serverless, ejecuta el request y mata el container
+Se puede activar load balancer
+Se puede asignar un dominio a una tarea de ECS, ya que cada contenedor levantado tiene una ip diferente
+
+En deplotment no se usa docker compose
+Se debe configurar el proyecto con las variables de entorno apropiadas
+
+En la variable env_file se configuran las variables de entorno y dp se usan como en node normal
+
+En command se pone el comando de node a ejecutar, ej
+node,app.js
+
+Cuando hay que senhalar a otro contenedor de ECS
+se usa localhost como URL
+
+MONGODB_URL: localhost
+
+Se crea una tarea la cual contiene todas las propiedades y variables de entorno para los contenedores y despues se levanta esa tarea con un servicio
+
+En el load balancer hay que configurar un health check
+
+Cuando se actualiaza la imagen se debe ir al sevicio y darle actualizar servicio y eso descarga la ultima version de la imagen del contenedor
+
+Se deben definir volumenes en la definicion de la tarea para poder persistir los datos
+Tipo EFS, se debe crear un nuevo file system dentro de la red que nos creo el cluster
+
+Los volumenes se crean y manejan en EFS    

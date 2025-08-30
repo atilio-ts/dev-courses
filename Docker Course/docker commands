@@ -57,4 +57,9 @@ Flags
 (runs in detached mode)
 
 
+=================================================
+docker-compose up
 
+
+=================================================
+docker exec nombreContenedor comandoAEjecutar

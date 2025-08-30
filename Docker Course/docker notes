@@ -20,4 +20,18 @@ To create a docker network use the docker network command, with the create optio
 You can use the --network tag to specify a network name to a container, now since you containers are in the same network you can user the container name and port in you code to comunicate.
 
 
+You can have stage docker files that are docker images that have multiple phases. For example to create a frontend container first, you need node to compile and create the build, and after that you can add a second FROM to your docker file to use nginx to serve those files
 
+FROM node:14-alpine as step-name
+
+....
+
+RUN npm run build (creates build folder)
+
+FROM nginx:stable-alpine
+
+COPY --from=step-name /app/build /nginxFolder
+(Copies the final contents from this step)
+
+CMD [] 
+(Start nginx)
